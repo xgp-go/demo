@@ -2,92 +2,54 @@
   <div id="root">
     <el-container class="elContainer">
       <el-header class="elHeader">
-        <el-row type="flex"
-                justify="space-between"
-                class="elRow">
-          <el-col style="width:200px;text-align:center">
-            <h3 style="color:#fff;margin:initial">集流同传平台</h3>
+        <el-row type="flex" justify="space-between" class="elRow">
+          <el-col
+            style="width: 200px; text-align: center; cursor: pointer"
+            @click.native="go"
+          >
+            <h3 style="color: #fff; margin: initial">集流同传平台</h3>
           </el-col>
-          <el-col style="width:200px;text-align:center">---</el-col>
+          <el-col style="width: 200px; text-align: center">---</el-col>
         </el-row>
       </el-header>
-      <el-container class="elContainer">
-        <el-aside width="200px"
-                  class="elAside">
+      <el-container class="elContainers">
+        <el-aside width="200px" class="elAside">
           <!-- 导航start -->
-          <el-menu class="elMenu"
-                   :router="true"
-                   :unique-opened="true"
-                   background-color="#3a4966"
-                   text-color="#E8E8E8"
-                   active-text-color="#4095E5">
-            <!-- 业务管理 -->
-            <el-submenu index="business/template">
-              <template slot="title">
-                <i class="el-icon-house"></i>
-                <span>业务管理</span>
-              </template>
-              <el-menu-item index="template">
-                <span slot="title">模板信息管理</span>
+          <el-menu
+            class="elMenu"
+            background-color="#3a4966"
+            text-color="#E8E8E8"
+            active-text-color="#4095E5"
+            :unique-opened="true"
+            :default-active="defaultActive"
+            @select="handleSelect"
+          >
+            <template v-for="item in router">
+              <el-submenu
+                :index="item.name"
+                :key="item.name"
+                v-if="item.children && item.children.length > 0"
+              >
+                <template slot="title">
+                  <i :class="item.mate.icon"></i>
+                  <span>{{ item.mate.title }}</span>
+                </template>
+                <el-menu-item
+                  :index="items.name"
+                  v-for="items in item.children"
+                  :key="items.name"
+                >
+                  <span slot="title">{{ items.mate.title }}</span>
+                </el-menu-item>
+              </el-submenu>
+
+              <el-menu-item :index="item.name" :key="item.name" v-else>
+                <template slot="title">
+                  <i :class="item.mate.icon"></i>
+                  <span>{{ item.mate.title }}</span>
+                </template>
               </el-menu-item>
-              <el-menu-item index="live">
-                <span slot="title">直播管理</span>
-              </el-menu-item>
-              <el-menu-item index="lookback">
-                <span slot="title">回看管理</span>
-              </el-menu-item>
-              <el-menu-item index="mediaresources">
-                <span slot="title">媒资信息管理</span>
-              </el-menu-item>
-              <el-menu-item index="preview">
-                <span slot="title">预览播放</span>
-              </el-menu-item>
-            </el-submenu>
-            <!-- 策略管理 -->
-            <el-submenu index="strategy/task">
-              <template slot="title">
-                <i class="el-icon-message"></i>
-                <span>策略管理</span>
-              </template>
-              <el-menu-item index="strategy/task">
-                <span slot="title">任务调度管理</span>
-              </el-menu-item>
-              <el-menu-item index="strategy/open">
-                <span slot="title">合流开启</span>
-              </el-menu-item>
-              <el-menu-item index="strategy/close">
-                <span slot="title">合流关闭</span>
-              </el-menu-item>
-            </el-submenu>
-            <!-- 日志 -->
-            <el-submenu index="log/tasklog">
-              <template slot="title">
-                <i class="el-icon-user"></i>
-                <span>日志管理</span>
-              </template>
-              <el-menu-item index="log/tasklog">
-                <span slot="title">任务操作日志</span>
-              </el-menu-item>
-              <el-menu-item index="log/instruct">
-                <span slot="title">指令日志</span>
-              </el-menu-item>
-              <el-menu-item index="log/livelog">
-                <span slot="title">直播日志</span>
-              </el-menu-item>
-              <el-menu-item index="log/lookbacklog">
-                <span slot="title">回看日志</span>
-              </el-menu-item>
-            </el-submenu>
-            <!-- 配置管理 -->
-            <el-submenu index="setting/operation">
-              <template slot="title">
-                <i class="el-icon-setting"></i>
-                <span>配置管理</span>
-              </template>
-              <el-menu-item index="setting/operation">
-                <span slot="title">操作指令配置</span>
-              </el-menu-item>
-            </el-submenu>
+            </template>
           </el-menu>
           <!-- 导航end -->
         </el-aside>
@@ -100,17 +62,45 @@
 </template>
 
 <script>
+import { initRouter } from "@/router";
+
 export default {
   name: "Layout",
+  data() {
+    return {
+      defaultActive: "",
+      router: initRouter,
+    };
+  },
   methods: {
-  }
-}
+    go() {
+      console.log("1111111111");
+      this.$router.push({ path: "/" });
+      this.defaultActive = this.$route.name;
+    },
+    handleSelect(key) {
+      if (key !== this.$route.name) {
+        this.$router.push({ name: key });
+        this.defaultActive = key;
+      }
+    },
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.defaultActive = to.name;
+    });
+  },
+};
 </script>
 
 <style lang="less" scoped>
 .elContainer,
 .elRow {
   height: 100%;
+}
+
+.elContainers {
+  overflow: hidden;
 }
 
 .elHeader {
@@ -128,6 +118,19 @@ export default {
     height: 100%;
     overflow-y: auto;
     border-right: initial;
+    &::v-deep .is-active {
+      background-color: rgba(51, 51, 51, 0.3) !important;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        display: inline-block;
+        width: 6px;
+        height: 50px;
+        background-color: #4095e5;
+      }
+    }
   }
 }
 </style>
