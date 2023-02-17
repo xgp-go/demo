@@ -13,6 +13,10 @@ body,
   height: 100%;
 }
 
+html {
+  font-size: 14px;
+}
+
 body {
   padding: initial;
   margin: initial;

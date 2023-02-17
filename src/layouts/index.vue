@@ -2,48 +2,45 @@
   <div id="root">
     <el-container class="elContainer">
       <el-header class="elHeader">
-        <el-row type="flex" justify="space-between" class="elRow">
-          <el-col
-            style="width: 200px; text-align: center; cursor: pointer"
-            @click.native="go"
-          >
+        <el-row type="flex"
+                justify="space-between"
+                class="elRow">
+          <el-col style="width: 200px; text-align: center; cursor: pointer"
+                  @click.native="go">
             <h3 style="color: #fff; margin: initial">集流同传平台</h3>
           </el-col>
           <el-col style="width: 200px; text-align: center">---</el-col>
         </el-row>
       </el-header>
       <el-container class="elContainers">
-        <el-aside width="200px" class="elAside">
+        <el-aside width="200px"
+                  class="elAside">
           <!-- 导航start -->
-          <el-menu
-            class="elMenu"
-            background-color="#3a4966"
-            text-color="#E8E8E8"
-            active-text-color="#4095E5"
-            :unique-opened="true"
-            :default-active="defaultActive"
-            @select="handleSelect"
-          >
+          <el-menu class="elMenu"
+                   background-color="#3a4966"
+                   text-color="#E8E8E8"
+                   active-text-color="#4095E5"
+                   :unique-opened="true"
+                   :default-active="defaultActive"
+                   @select="handleSelect">
             <template v-for="item in router">
-              <el-submenu
-                :index="item.name"
-                :key="item.name"
-                v-if="item.children && item.children.length > 0"
-              >
+              <el-submenu :index="item.name"
+                          :key="item.name"
+                          v-if="item.children && item.children.length > 0">
                 <template slot="title">
                   <i :class="item.mate.icon"></i>
                   <span>{{ item.mate.title }}</span>
                 </template>
-                <el-menu-item
-                  :index="items.name"
-                  v-for="items in item.children"
-                  :key="items.name"
-                >
+                <el-menu-item :index="items.name"
+                              v-for="items in item.children"
+                              :key="items.name">
                   <span slot="title">{{ items.mate.title }}</span>
                 </el-menu-item>
               </el-submenu>
 
-              <el-menu-item :index="item.name" :key="item.name" v-else>
+              <el-menu-item :index="item.name"
+                            :key="item.name"
+                            v-else>
                 <template slot="title">
                   <i :class="item.mate.icon"></i>
                   <span>{{ item.mate.title }}</span>
@@ -53,7 +50,7 @@
           </el-menu>
           <!-- 导航end -->
         </el-aside>
-        <el-main>
+        <el-main class="elMain">
           <router-view />
         </el-main>
       </el-container>
@@ -74,7 +71,6 @@ export default {
   },
   methods: {
     go() {
-      console.log("1111111111");
       this.$router.push({ path: "/" });
       this.defaultActive = this.$route.name;
     },
@@ -119,7 +115,7 @@ export default {
     overflow-y: auto;
     border-right: initial;
     &::v-deep .is-active {
-      background-color: rgba(51, 51, 51, 0.3) !important;
+      background-color: rgba(230, 247, 255, 0.9) !important;
       position: relative;
       &::after {
         content: "";
@@ -131,6 +127,18 @@ export default {
         background-color: #4095e5;
       }
     }
+  }
+}
+
+.elMain {
+  background-color: #f7f6f4;
+  padding: 10px;
+  & > div {
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 20px 10px 10px;
+    border-radius: 5px;
+    background-color: #fff;
   }
 }
 </style>
