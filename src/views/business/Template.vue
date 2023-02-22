@@ -410,7 +410,8 @@ export default {
       this.$refs["ruleForm"].validate(async (valid) => {
         if (valid) {
           this.isRight = true
-          let { data: { code, message } } = await createTempalte({ ...this.ruleForm })
+          let username = localStorage.getItem("username")
+          let { data: { code, message } } = await createTempalte({ ...this.ruleForm, username })
           this.isRight = false
           if (code == 200) {
             this.handleClose()
