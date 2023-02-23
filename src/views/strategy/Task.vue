@@ -101,7 +101,7 @@
                        @click="deleteSelects([row])">删除</el-link>
               <el-divider direction="vertical"></el-divider>
               <el-link type="success"
-                       @click="handlerPreview(row)">合流</el-link>
+                       @click="handlerInterflow(row)">合流</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -117,7 +117,8 @@
     </section>
 
     <!-- 新增、修改 -->
-    <el-dialog width="50%"
+    <el-dialog class="elDialog"
+               width="50%"
                top="10vh"
                :title="title"
                :close-on-click-modal="false"
@@ -244,7 +245,7 @@ export default {
         ],
       },
 
-      dialogVisible: true,
+      dialogVisible: false,
       title: "",
       isRight: false,
 
@@ -406,6 +407,9 @@ export default {
           // }
         } else return false;
       });
+    },
+    handlerInterflow(row) {
+      this.$router.push({ name: "taskEdit", params: { id: row.id } })
     }
   }
 }
@@ -417,5 +421,9 @@ export default {
 }
 .searchElM {
   width: 40%;
+}
+.elDialog ::v-deep .el-dialog__body {
+  border-top: 1.5px solid rgba(26, 26, 26, 0.6);
+  border-bottom: 1.5px solid rgba(26, 26, 26, 0.6);
 }
 </style>

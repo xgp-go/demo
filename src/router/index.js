@@ -83,6 +83,15 @@ export const initRouter = [
           title: "任务调度管理",
         },
       },
+      // 合流详情
+      {
+        path: '/index/strategy/task/edit/:id',
+        name: 'taskEdit',
+        component: () => import("@/views/strategy/TaskEdit.vue"),
+        mate: {
+          isConceal: true
+        },
+      },
       // 合流开启
       {
         path: '/index/strategy/open',

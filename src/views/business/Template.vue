@@ -92,7 +92,8 @@
     </section>
 
     <!-- 新增 -->
-    <el-dialog width="80%"
+    <el-dialog class="elDialog"
+               width="80%"
                top="10vh"
                title="新增"
                :close-on-click-modal="false"
@@ -258,6 +259,7 @@
       <span slot="footer"
             class="dialog-footer">
         <el-button size="small"
+                   type="primary"
                    @click="dialogVisibles=false">关 闭</el-button>
       </span>
     </el-dialog>
@@ -410,8 +412,8 @@ export default {
       this.$refs["ruleForm"].validate(async (valid) => {
         if (valid) {
           this.isRight = true
-          let username = localStorage.getItem("username")
-          let { data: { code, message } } = await createTempalte({ ...this.ruleForm, username })
+          let createBy = localStorage.getItem("username")
+          let { data: { code, message } } = await createTempalte({ ...this.ruleForm, createBy })
           this.isRight = false
           if (code == 200) {
             this.handleClose()
@@ -435,6 +437,10 @@ export default {
 }
 .searchElM {
   width: 40%;
+}
+.elDialog ::v-deep .el-dialog__body {
+  border-top: 1.5px solid rgba(26, 26, 26, 0.6);
+  border-bottom: 1.5px solid rgba(26, 26, 26, 0.6);
 }
 
 .DialogBody {

@@ -31,11 +31,13 @@
                   <i :class="item.mate.icon"></i>
                   <span>{{ item.mate.title }}</span>
                 </template>
-                <el-menu-item :index="items.name"
-                              v-for="items in item.children"
-                              :key="items.name">
-                  <span slot="title">{{ items.mate.title }}</span>
-                </el-menu-item>
+                <template v-for="items in item.children">
+                  <el-menu-item :index="items.name"
+                                :key="items.name"
+                                v-if="!items.mate.isConceal">
+                    <span slot="title">{{ items.mate.title }}</span>
+                  </el-menu-item>
+                </template>
               </el-submenu>
 
               <el-menu-item :index="item.name"
