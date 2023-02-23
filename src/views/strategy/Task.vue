@@ -144,7 +144,7 @@
                          placeholder="请选择"
                          class="searchElM"
                          style="width:48%"
-                         v-model="searchForm.status">
+                         v-model="ruleForm.status">
                 <el-option label="日"
                            :value="0">
                 </el-option>
@@ -161,7 +161,6 @@
               <el-date-picker size="small"
                               v-model="ruleForm.createTime"
                               type="date"
-                              style="width:48%"
                               placeholder="请选择开始时间"
                               format="yyyy 年 MM 月 dd 日"
                               value-format="yyyy-MM-dd"
@@ -186,7 +185,7 @@
                          placeholder="请选择"
                          class="searchElM"
                          style="width:48%"
-                         v-model="searchForm.status">
+                         v-model="ruleForm.status">
                 <el-option label="开启"
                            :value="1">
                 </el-option>
